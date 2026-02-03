@@ -1,0 +1,166 @@
+{
+  "version": "20260112_018",
+  "generated_utc": "2026-01-17 16:43:12 UTC",
+  "paths": {
+    "data_path": "D:\\projectmt5\\42swam\\data_xauusd\\xauusd_M5.csv",
+    "script_path": "D:\\projectmt5\\trend_project\\experiments\\20260112_019_Mode4_TP2_ConfidenceMax.py",
+    "repo_root": "D:\\projectmt5\\trend_project",
+    "out_dir": "D:\\projectmt5\\20260112",
+    "artifacts_dir": "D:\\projectmt5\\20260112\\019_artifacts"
+  },
+  "frozen_016": {
+    "selected_config_path": "D:\\projectmt5\\20260112\\016_artifacts\\selected_config.json",
+    "selected_config_sha256": "d428abaee284f4c2c084ddd601e68e022ff9ab9bc7279f6f05a9e5d6546bb894",
+    "thresholds_path": "D:\\projectmt5\\20260112_mode12\\016_artifacts\\thresholds_walkforward.json",
+    "thresholds_sha256": "854c7567b691289807563a4bfd236f3fcba716d054bcfe1c4dbe4a55fd04fb97"
+  },
+  "data_file": {
+    "sha256": "92dc7a44d2fad5b4a3978a60334a1c100512ad852e417d5795a4146115192a3a",
+    "bytes": 82804555,
+    "mtime_utc": "2025-12-29 14:18:22 UTC",
+    "rows": 1151111,
+    "start": "2010-01-04 00:00:00+00:00",
+    "end": "2025-12-26 14:55:00+00:00"
+  },
+  "params": {
+    "purge_bars": 40,
+    "embargo_bars": 40,
+    "initial_capital_usd": 200.0,
+    "roundtrip_cost_price": 0.2,
+    "slippage_buffer_price": 0.05,
+    "signal_grid": {
+      "entry_delay": [
+        0,
+        1,
+        2
+      ],
+      "confirm_window": [
+        0,
+        2,
+        4,
+        6
+      ],
+      "fast_abs_ratio": [
+        0.6,
+        0.7,
+        0.8,
+        0.9,
+        1.0
+      ],
+      "zero_eps_mult": [
+        0.0,
+        1e-06,
+        1e-05
+      ]
+    },
+    "price_scale": 1508.1,
+    "risk_grid": {
+      "risk_cap_usd": [
+        2.0,
+        3.0,
+        4.0,
+        5.0,
+        6.0,
+        8.0,
+        9.0,
+        10.0
+      ],
+      "daily_stop_loss_usd": [
+        4.0,
+        5.0,
+        6.0,
+        8.0,
+        10.0,
+        12.0
+      ],
+      "dd_trigger_usd_grid": [
+        25.0,
+        30.0,
+        35.0,
+        40.0,
+        45.0,
+        60.0
+      ],
+      "dd_stop_cooldown_bars_grid": [
+        480,
+        960,
+        1440
+      ],
+      "risk_scale_min_grid": [
+        0.05,
+        0.1,
+        0.15
+      ]
+    },
+    "exit_grid": {
+      "H": [
+        144,
+        240
+      ],
+      "H2": [
+        240,
+        360,
+        480,
+        720
+      ],
+      "tp1_q": [
+        0.05,
+        0.08,
+        0.1,
+        0.12,
+        0.15,
+        0.2,
+        0.25
+      ],
+      "sl_q": [
+        0.7,
+        0.75,
+        0.8,
+        0.85,
+        0.9,
+        0.95
+      ],
+      "tp2_q": [
+        0.4,
+        0.45,
+        0.5
+      ],
+      "tp1_over_cost_k": [
+        1.5,
+        2.0,
+        3.0,
+        4.0
+      ],
+      "tp2_n1": [
+        3,
+        5,
+        8
+      ],
+      "tp2_n2": [
+        10,
+        13
+      ]
+    }
+  },
+  "env": {
+    "python": "3.12.7"
+  },
+  "git_hash": "NA",
+  "outputs": {
+    "report": "D:\\projectmt5\\20260112\\019.txt",
+    "artifacts": [
+      "D:\\projectmt5\\20260112\\019_artifacts\\manifest.json",
+      "D:\\projectmt5\\20260112\\019_artifacts\\leakage_audit.json",
+      "D:\\projectmt5\\20260112\\019_artifacts\\tp2_policy.json",
+      "D:\\projectmt5\\20260112\\019_artifacts\\tp2_candidates.csv",
+      "D:\\projectmt5\\20260112\\019_artifacts\\tp2_bucket_stats.csv",
+      "D:\\projectmt5\\20260112\\019_artifacts\\tp2_calibration.json",
+      "D:\\projectmt5\\20260112\\019_artifacts\\backtest_mode4_trades.csv",
+      "D:\\projectmt5\\20260112\\019_artifacts\\execution_audit.json",
+      "D:\\projectmt5\\20260112\\019_artifacts\\lot_math_audit.json",
+      "D:\\projectmt5\\20260112\\019_artifacts\\selected_config.json",
+      "D:\\projectmt5\\20260112\\019_artifacts\\candidates.csv",
+      "D:\\projectmt5\\20260112\\019_artifacts\\20260112_019_Mode4_TP2_ConfidenceMax.py"
+    ]
+  }
+}

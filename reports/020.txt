@@ -1,0 +1,176 @@
+﻿STATUS_UPDATE
+- 020 仅做稳定性复核：不改 019 交易逻辑/参数；审计基于 019 产物 + 复跑一致性校验 + 统计复核。
+- 019 复跑：rc=0 | elapsed_s=1062.89（只用于一致性核验，不做任何参数/逻辑修改）。
+
+FROZEN_BASELINE_019
+- 019 冻结哈希/关键配置/硬约束审计摘要（从 019.txt 复制，用于对照）：
+FROZEN_DIFF_016_VS_019
+- 016_selected_config=D:\projectmt5\20260112\016_artifacts\selected_config.json | sha256=d428abaee284f4c2c084ddd601e68e022ff9ab9bc7279f6f05a9e5d6546bb894
+- 016_thresholds=D:\projectmt5\20260112_mode12\016_artifacts\thresholds_walkforward.json | sha256=854c7567b691289807563a4bfd236f3fcba716d054bcfe1c4dbe4a55fd04fb97
+- non_tp2_hash_016=5f84f0dc579486095feeae878c5f57b70084a55efa4438f8407749080dad0b77
+- non_tp2_hash_019=5f84f0dc579486095feeae878c5f57b70084a55efa4438f8407749080dad0b77
+- match=True
+{}
+
+
+BACKTEST_SUMMARY
+- preOS: epd=1.0103, hit@TP1=0.8262, hit@TP2=0.3604, PF=1.8653, ev_r=0.1731, maxDD_usd=23.18
+- OS: epd=0.4995, hit@TP1=0.8183, hit@TP2=0.3596, PF=1.9198, ev_r=0.1875, maxDD_usd=14.71
+- ALL: epd=0.8714, hit@TP1=0.8250, hit@TP2=0.3603, PF=1.8740, ev_r=0.1753, maxDD_usd=23.18
+
+
+CONFIDENCE_AUDIT
+- method=daily_block_bootstrap | seed=10
+- preOS: actual=22.69 | p80=23.85 (<=60: PASS) | p95=28.95 (<=80: PASS) | n=1533
+- OS: actual=12.25 | p80=19.25 (<=60: PASS) | p95=24.66 (<=80: PASS) | n=322
+- ALL: actual=22.69 | p80=24.41 (<=60: PASS) | p95=28.61 (<=80: PASS) | n=1855
+- confidence_audit.json: D:\projectmt5\20260112\019_artifacts\confidence_audit.json
+
+
+THRESHOLDS_USED
+- H2=240 | thresh_prob=0.55 | q_target=0.4
+- regime_weighting=vol_only | scale_base=0.8
+- posterior_gate: p0=0.6 | require_P_ge=0.8
+- trail_no_tp2_mult=0.6 | trail_tp2_mult=1000000.0
+
+
+EXECUTION_AUDIT_EXCERPT
+- skipped_min_lot_preOS=974 | skipped_over_risk_cap_preOS=974 | skipped_daily_stop_preOS=55
+- skipped_min_lot_OS=955 | skipped_over_risk_cap_OS=955 | skipped_daily_stop_OS=13
+- dd_trigger_usd=25.00 | dd_stop_cooldown_bars=480 | risk_scale_min=0.050
+- min_lot=0.01 | lot_math_audit.json: D:\projectmt5\20260112\019_artifacts\lot_math_audit.json
+- backtest_mode4_trades.csv: D:\projectmt5\20260112\019_artifacts\backtest_mode4_trades.csv
+
+
+- 019 关键配置摘要（019_artifacts/selected_config.json）：
+{"pre_epd": 1.0102669444534238, "pre_pf": 1.8653296185686412, "pre_ev_r": 0.17307160279151618, "pre_hit_tp1": 0.8262195121951219, "pre_hit_tp2": 0.3604336043360434, "pre_maxdd_usd": 23.17925785665875, "os_epd": 0.49971505799127025, "all_epd": 0.8715000843691996, "all_pf": 1.873952755343297, "all_ev_r": 0.17531751287582176, "posterior_tp1": 1.0, "posterior_tp2": 0.9999996656475405, "posterior_sl": 0.9999813081440319, "entry_delay": 1, "confirm_window": 6, "fast_abs_ratio": 0.6, "zero_eps_mult": 1e-05, "H1": 240, "H2": 240, "tp1_q": 0.05, "sl_q": 0.85, "tp2_q": 0.4, "k_cost": 1.5, "risk_cap_usd": 4.0, "daily_stop_loss_usd": 4.0, "dd_trigger_usd": 25.0, "dd_stop_cooldown_bars": 480, "risk_scale_min": 0.05, "tp2_n1": 8, "tp2_n2": 10, "state_thr": 0.55, "tp2_thresh_prob": 0.55, "tp2_regime_weighting": "vol_only", "tp2_scale_base": 0.8, "constraints_ok": true, "score": 0.17307160279151618}
+
+- 019 TP2 policy（019_artifacts/tp2_policy.json）：
+{"name": "tp2_deep_019", "H2": 240, "thresh_prob": 0.55, "q_target": 0.4, "regime_weighting": "vol_only", "scale_base": 0.8, "trail_no_tp2_mult": 0.6, "trail_tp2_mult": 1000000.0, "posterior_P(p>=0.60)": 0.9999996656475405, "posterior_gate": {"p0": 0.6, "require_P_ge": 0.8}}
+
+- 019 script sha256=7ecda16cbef35aa7b06b908a235b7a0411b2e4f051be33326df2b1a221c78edd | path=D:\projectmt5\trend_project\experiments\20260112_019_Mode4_TP2_ConfidenceMax.py
+
+REPRO_CHECK_SINGLE_RUN
+- 容差（tolerances）：epd/hit@TP1/PF/ev_r <= 1e-6；maxDD_usd <= 1e-3；non_tp2_hash 必须完全一致且 match=True。
+- 关键产物哈希对照（baseline_before_rerun vs after_rerun）：
+{"before": {"019.txt_sha256": "63979de62d01eda9976f1587f382990dd5f77a1498766f065d06307b90c7950e", "019_selected_config_sha256": "75769364e18bb788e07041bb69df2c542005ee0da361e69340c2a1df2092222e", "019_confidence_audit_sha256": "666a048d07c7e47c307564002db844d15e87da0f10526033b5ba27515d31a8db", "019_tp2_policy_sha256": "1fa1377ea7c2841457790f5b9281e430a0e800c60085e322401addf2b4052645", "019_trades_sha256": "c5b3549a06c91300ada7d51623fe8c017d7e74f214fc165ba933270343490761", "019_script_sha256": "7ecda16cbef35aa7b06b908a235b7a0411b2e4f051be33326df2b1a221c78edd"}, "after": {"019.txt_sha256": "63979de62d01eda9976f1587f382990dd5f77a1498766f065d06307b90c7950e", "019_selected_config_sha256": "75769364e18bb788e07041bb69df2c542005ee0da361e69340c2a1df2092222e", "019_confidence_audit_sha256": "666a048d07c7e47c307564002db844d15e87da0f10526033b5ba27515d31a8db", "019_tp2_policy_sha256": "1fa1377ea7c2841457790f5b9281e430a0e800c60085e322401addf2b4052645", "019_trades_sha256": "c5b3549a06c91300ada7d51623fe8c017d7e74f214fc165ba933270343490761", "019_script_sha256": "7ecda16cbef35aa7b06b908a235b7a0411b2e4f051be33326df2b1a221c78edd"}}
+- non_tp2_hash baseline: 016=5f84f0dc579486095feeae878c5f57b70084a55efa4438f8407749080dad0b77 | 019=5f84f0dc579486095feeae878c5f57b70084a55efa4438f8407749080dad0b77 | match=True
+- non_tp2_hash rerun:    016=5f84f0dc579486095feeae878c5f57b70084a55efa4438f8407749080dad0b77 | 019=5f84f0dc579486095feeae878c5f57b70084a55efa4438f8407749080dad0b77 | match=True
+- frozen_hash_pass=True
+- 单次复跑指标对齐（baseline vs rerun）：
+segment    metric  baseline   rerun  abs_diff      tol  pass
+  preOS       epd    1.0103  1.0103       0.0 0.000001  True
+  preOS   hit_tp1    0.8262  0.8262       0.0 0.000001  True
+  preOS        pf    1.8653  1.8653       0.0 0.000001  True
+  preOS      ev_r    0.1731  0.1731       0.0 0.000001  True
+  preOS maxdd_usd   23.1800 23.1800       0.0 0.001000  True
+     OS       epd    0.4995  0.4995       0.0 0.000001  True
+     OS   hit_tp1    0.8183  0.8183       0.0 0.000001  True
+     OS        pf    1.9198  1.9198       0.0 0.000001  True
+     OS      ev_r    0.1875  0.1875       0.0 0.000001  True
+     OS maxdd_usd   14.7100 14.7100       0.0 0.001000  True
+    ALL       epd    0.8714  0.8714       0.0 0.000001  True
+    ALL   hit_tp1    0.8250  0.8250       0.0 0.000001  True
+    ALL        pf    1.8740  1.8740       0.0 0.000001  True
+    ALL      ev_r    0.1753  0.1753       0.0 0.000001  True
+    ALL maxdd_usd   23.1800 23.1800       0.0 0.001000  True
+- single_run_pass=True
+
+MULTI_SEED_STABILITY
+- N=20 多随机种子复核：seed 仅影响 bootstrap/统计抽样；交易信号/执行不允许受 seed 影响。
+- 汇总（preOS）：mean/std/min/max
+                  mean           std      min      max
+pre_epd         1.0103  2.220446e-16   1.0103   1.0103
+pre_hit_tp1     0.8262  0.000000e+00   0.8262   0.8262
+pre_pf          1.8653  0.000000e+00   1.8653   1.8653
+pre_ev_r        0.1731  2.775558e-17   0.1731   0.1731
+pre_maxdd_usd  23.1800  0.000000e+00  23.1800  23.1800
+- 汇总（OS）：mean/std/min/max
+                 mean           std      min      max
+os_epd         0.4995  5.551115e-17   0.4995   0.4995
+os_hit_tp1     0.8183  1.110223e-16   0.8183   0.8183
+os_pf          1.9198  4.440892e-16   1.9198   1.9198
+os_ev_r        0.1875  0.000000e+00   0.1875   0.1875
+os_maxdd_usd  14.7100  1.776357e-15  14.7100  14.7100
+- 汇总（ALL）：mean/std/min/max
+                  mean           std      min      max
+all_epd         0.8714  1.110223e-16   0.8714   0.8714
+all_hit_tp1     0.8250  1.110223e-16   0.8250   0.8250
+all_pf          1.8740  0.000000e+00   1.8740   1.8740
+all_ev_r        0.1753  0.000000e+00   0.1753   0.1753
+all_maxdd_usd  23.1800  0.000000e+00  23.1800  23.1800
+- 最好一次（按 all_ev_r 排序；若并列则取首行）：
+{"seed": 0, "pre_epd": 1.0103, "pre_hit_tp1": 0.8262, "pre_pf": 1.8653, "pre_ev_r": 0.1731, "pre_maxdd_usd": 23.18, "os_epd": 0.4995, "os_hit_tp1": 0.8183, "os_pf": 1.9198, "os_ev_r": 0.1875, "os_maxdd_usd": 14.71, "all_epd": 0.8714, "all_hit_tp1": 0.825, "all_pf": 1.874, "all_ev_r": 0.1753, "all_maxdd_usd": 23.18}
+- 最差一次（按 all_ev_r 排序；若并列则取首行）：
+{"seed": 0, "pre_epd": 1.0103, "pre_hit_tp1": 0.8262, "pre_pf": 1.8653, "pre_ev_r": 0.1731, "pre_maxdd_usd": 23.18, "os_epd": 0.4995, "os_hit_tp1": 0.8183, "os_pf": 1.9198, "os_ev_r": 0.1875, "os_maxdd_usd": 14.71, "all_epd": 0.8714, "all_hit_tp1": 0.825, "all_pf": 1.874, "all_ev_r": 0.1753, "all_maxdd_usd": 23.18}
+- multi_seed_metrics.csv: D:\projectmt5\20260112\020_artifacts\multi_seed_metrics.csv
+
+DRAWDOWN_BOOTSTRAP_AUDIT
+- ALL: daily PnL（按 exit_date 聚合，sparse 不补零）做 block bootstrap。
+- 3组 block_len_days={5,10,20}；每组 B=5000；输出 maxDD_usd 分布的 p80/p90/p95/p99，并给 p80/p95 的 95% CI。
+scope  cost_mult          method  block_len_days  n_days_sparse  n_boot       p80       p90       p95       p99  p80_ci_low  p80_ci_high  p95_ci_low  p95_ci_high  pass_p80_le_60  pass_p95_le_80
+  ALL        1.0 block_bootstrap               5           1855    5000 24.550944 26.984506 29.726916 36.494780   24.352741    24.793943   29.381919    30.269596            True            True
+  ALL        1.0 block_bootstrap              10           1855    5000 24.292885 26.931140 29.417952 35.033805   24.066878    24.576723   29.024553    29.925353            True            True
+  ALL        1.0 block_bootstrap              20           1855    5000 23.962917 26.988650 29.191263 34.895180   23.732688    24.212773   28.831197    29.708385            True            True
+- dd_bootstrap_summary.csv: D:\projectmt5\20260112\020_artifacts\dd_bootstrap_summary.csv
+- dd_bootstrap_samples: D:\projectmt5\20260112\020_artifacts\dd_bootstrap_samples.parquet
+
+YEARLY_AND_REGIME_ROBUSTNESS
+- 按年（2015-2025）：trade-based 分解口径（entry_time 切片；PF/EV 用 net_r；maxDD 用 sparse daily PnL）。
+ year  tickets  signals      epd  hit_tp1       pf     ev_r  maxdd_usd
+ 2015      427      427 1.169863 0.822014 1.714234 0.148781  11.099109
+ 2016      403      403 1.101093 0.821340 1.829944 0.169667  11.502923
+ 2017      454      454 1.243836 0.837004 1.914065 0.174535  12.403424
+ 2018      470      470 1.287671 0.823404 1.749440 0.154625  14.516694
+ 2019      386      386 1.057534 0.821244 1.691868 0.144358  14.927213
+ 2020      192      192 0.524590 0.869792 2.805994 0.263256   9.087734
+ 2021      359      359 0.983562 0.821727 2.084406 0.217571  11.778126
+ 2022      261      261 0.715069 0.808429 1.778434 0.163658  22.694680
+ 2023      353      353 0.967123 0.815864 1.859353 0.178623  12.250438
+ 2024      178      178 0.486339 0.814607 1.915688 0.188517  12.135608
+ 2025       14       14 0.038356 0.928571 6.205177 0.397713   0.000000
+- 最差年份：year=2019 | tickets=386 | epd=1.0575 | hit@TP1=0.8212 | PF=1.6919 | ev_r=0.1444 | maxDD_usd=14.93
+- 最差年份原因（启发式）：结构性波动/成本压力（需要进一步看成本占比与交易分布）
+- OS 子段（2023/2024/2025）分别指标：
+ year  tickets  signals      epd  hit_tp1       pf     ev_r  maxdd_usd
+ 2023      353      353 0.967123 0.815864 1.859353 0.178623  12.250438
+ 2024      178      178 0.486339 0.814607 1.915688 0.188517  12.135608
+ 2025       14       14 0.038356 0.928571 6.205177 0.397713   0.000000
+- Regime 分桶（vol_regime / trend_regime）：
+  regime_dim regime  tickets  signals      epd  hit_tp1       pf     ev_r  maxdd_usd
+  vol_regime      0     1974     1974 0.491901 0.816616 1.744617 0.159235  23.614421
+  vol_regime      1     1523     1523 0.379517 0.835850 2.069381 0.196162  17.762037
+trend_regime      0     2735     2735 0.681535 0.820475 1.834281 0.171763  22.664870
+trend_regime      1      762      762 0.189883 0.841207 2.035337 0.188074  25.717108
+
+COST_SLIPPAGE_STRESS
+- 成本/滑点压力：不改信号/执行，仅成本假设倍增 cost_mult。
+- ALL 指标（trade-based）+ 约束判定：ev_r>=0、maxDD<=100、p80<=60、p95<=80（p80/p95 取 block_len_days={5,10,20} 的最坏值）。
+ cost_mult  all_epd  all_hit_tp1   all_pf  all_ev_r  all_maxdd_usd  all_p80_worst_block  all_p95_worst_block  pass_ev_r_ge_0  pass_maxdd_le_100  pass_p80_le_60  pass_p95_le_80
+      1.00 0.871418     0.824993 1.873953  0.175318      22.694680            24.480163            29.725168            True               True            True            True
+      1.25 0.871418     0.824993 1.670536  0.138979      28.092816            29.896615            36.172273            True               True            True            True
+      1.50 0.871418     0.824993 1.478575  0.102641      44.939425            40.723498            50.346788            True               True            True            True
+
+OVERFITTING_RISK_DIAGNOSTICS
+- PSR/DSR：日收益=每日PnL/200USD（包含无交易日=0，更保守）。
+- DSR 近似：trials=540（TP2 deep grid 3*3*4*3*5）
+- preOS:
+{"n_days": 2922, "mean_daily": 0.0023646205046919232, "std_daily": 0.009037115750013643, "sr_daily": 0.2616565472992147, "sr_ann": 4.153668918393189, "skew": -0.2668731916660165, "kurt": 6.000475675352174, "sr_sigma": 0.01988857566048212, "psr_vs0": 1.0, "dsr_approx": 1.0, "n_trials_assumed": 540, "sr0_deflated": 0.05772367677405146}
+- ALL:
+{"n_days": 4013, "mean_daily": 0.0020673585595617585, "std_daily": 0.008546318642610393, "sr_daily": 0.24190047738850787, "sr_ann": 3.8400510311867704, "skew": -0.2694488173970377, "kurt": 6.821410661066289, "sr_sigma": 0.016932958112932144, "psr_vs0": 1.0, "dsr_approx": 1.0, "n_trials_assumed": 540, "sr0_deflated": 0.04914542990032065}
+- 诊断解读（仅诊断，不改选型）：psr_vs0 越接近 1 表示 P(true Sharpe > 0) 越高；dsr_approx 越接近 1 表示在假设 trials 的选择空间下仍显著高于 deflated 阈值 sr0_deflated。
+- 风险提示：PSR/DSR 基于近似假设（i.i.d/正态/弱依赖等），不覆盖结构性 regime 切换与极端尾部风险；用于量化“噪声/选择偏差”解释力。
+
+PASS_FAIL_DECISION
+- single_run_repro_pass=True
+- drawdown_bootstrap_pass(ALL)=True
+- cost_stress_pass(all_scenarios)=True
+- OVERALL=PASS
+
+REPRO_COMMANDS_AND_MANIFEST
+cd /d "D:/projectmt5/trend_project"
+conda activate trend_py311
+python "experiments/20260112_020_Mode4_StabilityAudit.py"
+
+{"paths": {"repo_root": "D:\\projectmt5\\trend_project", "out_dir": "D:\\projectmt5\\20260112", "baseline_019_txt": "D:\\projectmt5\\20260112\\019.txt", "baseline_019_artifacts": "D:\\projectmt5\\20260112\\019_artifacts", "report_020": "D:\\projectmt5\\20260112\\020.txt", "artifacts_020": "D:\\projectmt5\\20260112\\020_artifacts"}, "environment": {"python": "3.12.7 (tags/v3.12.7:0b05ead, Oct  1 2024, 03:06:41) [MSC v.1941 64 bit (AMD64)]", "platform": "Windows-10-10.0.19045-SP0", "cwd": "D:\\projectmt5\\trend_project", "numpy": "1.26.4", "pandas": "2.3.3"}, "baseline_019_hashes_before_rerun": {"019.txt_sha256": "63979de62d01eda9976f1587f382990dd5f77a1498766f065d06307b90c7950e", "019_selected_config_sha256": "75769364e18bb788e07041bb69df2c542005ee0da361e69340c2a1df2092222e", "019_confidence_audit_sha256": "666a048d07c7e47c307564002db844d15e87da0f10526033b5ba27515d31a8db", "019_tp2_policy_sha256": "1fa1377ea7c2841457790f5b9281e430a0e800c60085e322401addf2b4052645", "019_trades_sha256": "c5b3549a06c91300ada7d51623fe8c017d7e74f214fc165ba933270343490761", "019_script_sha256": "7ecda16cbef35aa7b06b908a235b7a0411b2e4f051be33326df2b1a221c78edd"}, "rerun_019_hashes_after_rerun": {"019.txt_sha256": "63979de62d01eda9976f1587f382990dd5f77a1498766f065d06307b90c7950e", "019_selected_config_sha256": "75769364e18bb788e07041bb69df2c542005ee0da361e69340c2a1df2092222e", "019_confidence_audit_sha256": "666a048d07c7e47c307564002db844d15e87da0f10526033b5ba27515d31a8db", "019_tp2_policy_sha256": "1fa1377ea7c2841457790f5b9281e430a0e800c60085e322401addf2b4052645", "019_trades_sha256": "c5b3549a06c91300ada7d51623fe8c017d7e74f214fc165ba933270343490761", "019_script_sha256": "7ecda16cbef35aa7b06b908a235b7a0411b2e4f051be33326df2b1a221c78edd"}, "outputs": {"multi_seed_metrics.csv": "D:\\projectmt5\\20260112\\020_artifacts\\multi_seed_metrics.csv", "dd_bootstrap_summary.csv": "D:\\projectmt5\\20260112\\020_artifacts\\dd_bootstrap_summary.csv", "dd_bootstrap_samples": "D:\\projectmt5\\20260112\\020_artifacts\\dd_bootstrap_samples.parquet", "yearly_metrics.csv": "D:\\projectmt5\\20260112\\020_artifacts\\yearly_metrics.csv", "regime_metrics.csv": "D:\\projectmt5\\20260112\\020_artifacts\\regime_metrics.csv", "cost_stress_metrics.csv": "D:\\projectmt5\\20260112\\020_artifacts\\cost_stress_metrics.csv", "overfit_diagnostics.json": "D:\\projectmt5\\20260112\\020_artifacts\\overfit_diagnostics.json"}, "notes": {"policy": "020 audit-only; does not modify 019 trading logic/params; reruns 019 once for reproducibility check (as requested)."}}
+

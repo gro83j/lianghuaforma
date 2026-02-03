@@ -1,0 +1,15 @@
+﻿021_FREEZE_SUMMARY
+
+策略形成路径（从 016 → 019 → 020）：
+1) 016：冻结非 TP2 逻辑与阈值（selected_config + thresholds_walkforward）。
+2) 019：仅优化 TP2（activation/estimation/deployment），其余逻辑保持 016 冻结。产出 019 报告与 artifacts。
+3) 020：稳定性审计，不改交易逻辑/参数；复跑 019 并做多种子、bootstrap DD、成本压力、年度/Regime 分段与 hash/tolerance 复核。
+
+关键参数/指标集合：
+- - preOS: epd=1.0103, hit@TP1=0.8262, hit@TP2=0.3604, PF=1.8653, ev_r=0.1731, maxDD_usd=23.18
+- - OS: epd=0.4995, hit@TP1=0.8183, hit@TP2=0.3596, PF=1.9198, ev_r=0.1875, maxDD_usd=14.71
+- - ALL: epd=0.8714, hit@TP1=0.8250, hit@TP2=0.3603, PF=1.8740, ev_r=0.1753, maxDD_usd=23.18
+- - preOS: actual=22.69 | p80=23.85 (<=60: PASS) | p95=28.95 (<=80: PASS) | n=1533
+- - OS: actual=12.25 | p80=19.25 (<=60: PASS) | p95=24.66 (<=80: PASS) | n=322
+- - ALL: actual=22.69 | p80=24.41 (<=60: PASS) | p95=28.61 (<=80: PASS) | n=1855
+- - OVERALL=PASS

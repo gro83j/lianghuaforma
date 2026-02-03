@@ -1,0 +1,15 @@
+{
+  "name": "tp2_deep_019",
+  "H2": 240,
+  "thresh_prob": 0.55,
+  "q_target": 0.4,
+  "regime_weighting": "vol_only",
+  "scale_base": 0.8,
+  "trail_no_tp2_mult": 0.6,
+  "trail_tp2_mult": 1000000.0,
+  "posterior_P(p>=0.60)": 0.9999996656475405,
+  "posterior_gate": {
+    "p0": 0.6,
+    "require_P_ge": 0.8
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "paths": {
+    "repo_root": "D:\\projectmt5\\trend_project",
+    "out_dir": "D:\\projectmt5\\20260112",
+    "baseline_019_txt": "D:\\projectmt5\\20260112\\019.txt",
+    "baseline_019_artifacts": "D:\\projectmt5\\20260112\\019_artifacts",
+    "report_020": "D:\\projectmt5\\20260112\\020.txt",
+    "artifacts_020": "D:\\projectmt5\\20260112\\020_artifacts"
+  },
+  "environment": {
+    "python": "3.12.7 (tags/v3.12.7:0b05ead, Oct  1 2024, 03:06:41) [MSC v.1941 64 bit (AMD64)]",
+    "platform": "Windows-10-10.0.19045-SP0",
+    "cwd": "D:\\projectmt5\\trend_project",
+    "numpy": "1.26.4",
+    "pandas": "2.3.3"
+  },
+  "baseline_019_hashes_before_rerun": {
+    "019.txt_sha256": "63979de62d01eda9976f1587f382990dd5f77a1498766f065d06307b90c7950e",
+    "019_selected_config_sha256": "75769364e18bb788e07041bb69df2c542005ee0da361e69340c2a1df2092222e",
+    "019_confidence_audit_sha256": "666a048d07c7e47c307564002db844d15e87da0f10526033b5ba27515d31a8db",
+    "019_tp2_policy_sha256": "1fa1377ea7c2841457790f5b9281e430a0e800c60085e322401addf2b4052645",
+    "019_trades_sha256": "c5b3549a06c91300ada7d51623fe8c017d7e74f214fc165ba933270343490761",
+    "019_script_sha256": "7ecda16cbef35aa7b06b908a235b7a0411b2e4f051be33326df2b1a221c78edd"
+  },
+  "rerun_019_hashes_after_rerun": {
+    "019.txt_sha256": "63979de62d01eda9976f1587f382990dd5f77a1498766f065d06307b90c7950e",
+    "019_selected_config_sha256": "75769364e18bb788e07041bb69df2c542005ee0da361e69340c2a1df2092222e",
+    "019_confidence_audit_sha256": "666a048d07c7e47c307564002db844d15e87da0f10526033b5ba27515d31a8db",
+    "019_tp2_policy_sha256": "1fa1377ea7c2841457790f5b9281e430a0e800c60085e322401addf2b4052645",
+    "019_trades_sha256": "c5b3549a06c91300ada7d51623fe8c017d7e74f214fc165ba933270343490761",
+    "019_script_sha256": "7ecda16cbef35aa7b06b908a235b7a0411b2e4f051be33326df2b1a221c78edd"
+  },
+  "outputs": {
+    "multi_seed_metrics.csv": "D:\\projectmt5\\20260112\\020_artifacts\\multi_seed_metrics.csv",
+    "dd_bootstrap_summary.csv": "D:\\projectmt5\\20260112\\020_artifacts\\dd_bootstrap_summary.csv",
+    "dd_bootstrap_samples": "D:\\projectmt5\\20260112\\020_artifacts\\dd_bootstrap_samples.parquet",
+    "yearly_metrics.csv": "D:\\projectmt5\\20260112\\020_artifacts\\yearly_metrics.csv",
+    "regime_metrics.csv": "D:\\projectmt5\\20260112\\020_artifacts\\regime_metrics.csv",
+    "cost_stress_metrics.csv": "D:\\projectmt5\\20260112\\020_artifacts\\cost_stress_metrics.csv",
+    "overfit_diagnostics.json": "D:\\projectmt5\\20260112\\020_artifacts\\overfit_diagnostics.json"
+  },
+  "notes": {
+    "policy": "020 audit-only; does not modify 019 trading logic/params; reruns 019 once for reproducibility check (as requested)."
+  }
+}

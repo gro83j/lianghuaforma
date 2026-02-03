@@ -1,0 +1,73 @@
+STATUS_UPDATE
+- 本轮仅调整 TP2（activation/estimation/deployment）；入场/TP1/SL/模型/风控/阈值/策略逻辑按 016 冻结。
+- 选型仅用 preOS（PurgedKFold+Embargo=40/40）；OS 仅用于验收。
+- leakage_audit.json: failures=0 | ok=True
+
+FROZEN_DIFF_016_VS_019
+- 016_selected_config=D:\projectmt5\20260112\016_artifacts\selected_config.json | sha256=d428abaee284f4c2c084ddd601e68e022ff9ab9bc7279f6f05a9e5d6546bb894
+- 016_thresholds=D:\projectmt5\20260112_mode12\016_artifacts\thresholds_walkforward.json | sha256=854c7567b691289807563a4bfd236f3fcba716d054bcfe1c4dbe4a55fd04fb97
+- non_tp2_hash_016=5f84f0dc579486095feeae878c5f57b70084a55efa4438f8407749080dad0b77
+- non_tp2_hash_019=5f84f0dc579486095feeae878c5f57b70084a55efa4438f8407749080dad0b77
+- match=True
+{}
+
+TP2_MODEL_SUMMARY
+- prob: LGBMClassifier + CalibratedClassifierCV(sigmoid) | gap=80 | folds=3 | n=2439 | base_rate=0.6101
+- prob_oof: auc=0.7029 | brier=0.2086 | ece=0.0301
+ bin  lo  hi   n   p_mean   y_mean      gap
+   0 0.0 0.1   0      NaN      NaN      NaN
+   1 0.1 0.2   3 0.186973 0.333333 0.146360
+   2 0.2 0.3 100 0.258906 0.240000 0.018906
+   3 0.3 0.4 287 0.354152 0.348432 0.005720
+   4 0.4 0.5 283 0.450943 0.505300 0.054357
+   5 0.5 0.6 272 0.549918 0.566176 0.016259
+   6 0.6 0.7 877 0.657054 0.619156 0.037897
+   7 0.7 0.8 245 0.753581 0.787755 0.034174
+   8 0.8 0.9 290 0.850135 0.868966 0.018830
+   9 0.9 1.0  82 0.918721 0.951220 0.032498
+- quant: LGBMRegressor(quantile) | selected_H2=240 | q_target=0.4 | base_q=0.2592 | n=2439
+
+TP2_POSTERIOR_CONFIDENCE_REPORT
+- tp2_attempt_rate_preOS=0.6667
+- tp2_cond_hit_attempt_preOS=0.6599
+- posterior_P(p>=0.60|attempt_preOS)=1.0000 | require>=0.80
+- n_att_preOS=1626 | k_hit_preOS=1073
+- tp2_bucket_stats.csv: D:\projectmt5\20260112\019_artifacts\tp2_bucket_stats.csv
+- tp2_candidates.csv: D:\projectmt5\20260112\019_artifacts\tp2_candidates.csv
+
+TP2_DECISION_LOGIC
+- Activation gate: 仅当 (p_tp2_prob>=thresh_prob) 且 (Beta-Binomial 后验 P(p>=0.60)>=0.80) 才启用 TP2。
+- Dynamic TP2: extra_R_target=clip(q_pred*scale,[0.20,1.20]); TP2_price = entry + dir*(tp1_dist + extra_R_target*sl_dist)。
+- Regime scaling: trend_only 且 strong_trend&momentum_strong => *1.1；vol_only 且 sideway|vol_high => *0.9；none => *1.0。
+- No TP2: runner trailing_stop=0.6*ATR_ref；With TP2: trailing 基本禁用（大倍数 ATR）；BE/出局规则不变。
+
+BACKTEST_SUMMARY
+- preOS: epd=1.0103, hit@TP1=0.8262, hit@TP2=0.3604, PF=1.8653, ev_r=0.1731, maxDD_usd=23.18
+- OS: epd=0.4995, hit@TP1=0.8183, hit@TP2=0.3596, PF=1.9198, ev_r=0.1875, maxDD_usd=14.71
+- ALL: epd=0.8714, hit@TP1=0.8250, hit@TP2=0.3603, PF=1.8740, ev_r=0.1753, maxDD_usd=23.18
+
+CONFIDENCE_AUDIT
+- method=daily_block_bootstrap | seed=10
+- preOS: actual=22.69 | p80=23.85 (<=60: PASS) | p95=28.95 (<=80: PASS) | n=1533
+- OS: actual=12.25 | p80=19.25 (<=60: PASS) | p95=24.66 (<=80: PASS) | n=322
+- ALL: actual=22.69 | p80=24.41 (<=60: PASS) | p95=28.61 (<=80: PASS) | n=1855
+- confidence_audit.json: D:\projectmt5\20260112\019_artifacts\confidence_audit.json
+
+THRESHOLDS_USED
+- H2=240 | thresh_prob=0.55 | q_target=0.4
+- regime_weighting=vol_only | scale_base=0.8
+- posterior_gate: p0=0.6 | require_P_ge=0.8
+- trail_no_tp2_mult=0.6 | trail_tp2_mult=1000000.0
+
+EXECUTION_AUDIT_EXCERPT
+- skipped_min_lot_preOS=974 | skipped_over_risk_cap_preOS=974 | skipped_daily_stop_preOS=55
+- skipped_min_lot_OS=955 | skipped_over_risk_cap_OS=955 | skipped_daily_stop_OS=13
+- dd_trigger_usd=25.00 | dd_stop_cooldown_bars=480 | risk_scale_min=0.050
+- min_lot=0.01 | lot_math_audit.json: D:\projectmt5\20260112\019_artifacts\lot_math_audit.json
+- backtest_mode4_trades.csv: D:\projectmt5\20260112\019_artifacts\backtest_mode4_trades.csv
+
+REPRODUCTION_COMMAND
+cd "D:\projectmt5\trend_project"
+conda activate trend_py311
+python "experiments/20260112_019_Mode4_TP2_ConfidenceMax.py"
+

@@ -1,0 +1,24 @@
+{
+  "tp2_rule": "tp2_deep_019",
+  "tp2_kind": "deep",
+  "tp2_thr": 0.55,
+  "tp2_mult_low": NaN,
+  "tp2_mult_high": NaN,
+  "trail_no_tp2_mult": 0.6,
+  "trail_tp2_mult": 1000000.0,
+  "H2": 240,
+  "q_target": 0.4,
+  "regime_weighting": "vol_only",
+  "scale_base": 0.8,
+  "posterior_tp2": 0.9999996656475405,
+  "n_tp1": 2439,
+  "k_tp2": 1073,
+  "model": {
+    "type": "lgbm_prob+quantile",
+    "prob_calibration": "sigmoid",
+    "oof_auc": 0.7028545221215925,
+    "oof_brier": 0.20859410173083626,
+    "oof_ece": 0.03013972080088236,
+    "feature_count": 0
+  }
+}

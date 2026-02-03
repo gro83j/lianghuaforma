@@ -1,0 +1,143 @@
+{
+  "run_id": "016",
+  "created_utc": "2026-01-16 08:13:31 UTC",
+  "entry_score_def": "entry_score = p_trade (RF+LGBM ensemble)",
+  "q_take_rate": 0.3,
+  "macd_score_threshold": 0.0,
+  "macd_hist_slope_threshold": 0.0,
+  "regime_threshold": 0.0,
+  "risk_score_threshold": 0.6,
+  "failure_veto_threshold": 0.6,
+  "risk_score_weights": [
+    0.4,
+    0.3,
+    0.3
+  ],
+  "take_rate_min_preos": 0.01,
+  "take_rate_signal_preos": 0.2767318456058734,
+  "thresholds": {
+    "type": "yearly_ms_key",
+    "q": 0.3,
+    "os_freeze_year": 2023,
+    "by_year": {
+      "2015": {
+        "year": 2015,
+        "train_n": 0,
+        "frozen_preos_only": false,
+        "thr_by_ms": {}
+      },
+      "2016": {
+        "year": 2016,
+        "train_n": 1618,
+        "frozen_preos_only": false,
+        "thr_by_ms": {
+          "mode1|short": 0.4939534351535226,
+          "mode1|long": 0.5127485053521759,
+          "mode2|short": 0.49709956751491713,
+          "mode2|long": 0.5000078201142096
+        }
+      },
+      "2017": {
+        "year": 2017,
+        "train_n": 3381,
+        "frozen_preos_only": false,
+        "thr_by_ms": {
+          "mode1|short": 0.495387446110019,
+          "mode1|long": 0.5139788118779348,
+          "mode2|short": 0.5000218138047761,
+          "mode2|long": 0.5044720344968265
+        }
+      },
+      "2018": {
+        "year": 2018,
+        "train_n": 5066,
+        "frozen_preos_only": false,
+        "thr_by_ms": {
+          "mode1|short": 0.4950865085196819,
+          "mode1|long": 0.5133658779400586,
+          "mode2|short": 0.49677319750118304,
+          "mode2|long": 0.5045077789213946
+        }
+      },
+      "2019": {
+        "year": 2019,
+        "train_n": 6795,
+        "frozen_preos_only": false,
+        "thr_by_ms": {
+          "mode1|short": 0.4955446167923866,
+          "mode1|long": 0.513314154934182,
+          "mode2|short": 0.4967081175493282,
+          "mode2|long": 0.5046102375695436
+        }
+      },
+      "2020": {
+        "year": 2020,
+        "train_n": 8551,
+        "frozen_preos_only": false,
+        "thr_by_ms": {
+          "mode1|short": 0.4959130255724988,
+          "mode1|long": 0.5141967996519575,
+          "mode2|short": 0.49752371025107855,
+          "mode2|long": 0.5045230979604953
+        }
+      },
+      "2021": {
+        "year": 2021,
+        "train_n": 10265,
+        "frozen_preos_only": false,
+        "thr_by_ms": {
+          "mode1|short": 0.4973364666277526,
+          "mode1|long": 0.5152866600368845,
+          "mode2|short": 0.49901527552770325,
+          "mode2|long": 0.5065400241286819
+        }
+      },
+      "2022": {
+        "year": 2022,
+        "train_n": 12044,
+        "frozen_preos_only": false,
+        "thr_by_ms": {
+          "mode1|short": 0.49773326173711047,
+          "mode1|long": 0.5157157566364271,
+          "mode2|short": 0.4990249517067513,
+          "mode2|long": 0.5063980398608167
+        }
+      },
+      "2023": {
+        "year": 2023,
+        "train_n": 13757,
+        "frozen_preos_only": true,
+        "thr_by_ms": {
+          "mode1|short": 0.4982327388836697,
+          "mode1|long": 0.5164006687034525,
+          "mode2|short": 0.49890858741239197,
+          "mode2|long": 0.5067094088643422
+        }
+      },
+      "2024": {
+        "year": 2024,
+        "train_n": 13757,
+        "frozen_preos_only": true,
+        "thr_by_ms": {
+          "mode1|short": 0.4982327388836697,
+          "mode1|long": 0.5164006687034525,
+          "mode2|short": 0.49890858741239197,
+          "mode2|long": 0.5067094088643422
+        }
+      },
+      "2025": {
+        "year": 2025,
+        "train_n": 13757,
+        "frozen_preos_only": true,
+        "thr_by_ms": {
+          "mode1|short": 0.4982327388836697,
+          "mode1|long": 0.5164006687034525,
+          "mode2|short": 0.49890858741239197,
+          "mode2|long": 0.5067094088643422
+        }
+      }
+    }
+  },
+  "selection_preos_only": true,
+  "note": "阈值/模型选型仅使用 pre-OS OOF；OS 仅验收，不参与选型。"
+}
