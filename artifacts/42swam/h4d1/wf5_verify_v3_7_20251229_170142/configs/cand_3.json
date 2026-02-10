@@ -1,0 +1,15 @@
+{
+  "candidate_id": "d1_only_logreg_k0_tp1L10_tp1S10_tp240_sl0.09_E2_tp1c50_lock50_betp1_plus_10_th0.65",
+  "family": "d1_only",
+  "k_cluster": 0,
+  "model_type": "logreg",
+  "threshold": 0.65,
+  "sl_factor": 0.09,
+  "tp1_long": 10,
+  "tp1_short": 10,
+  "tp2_level": 40,
+  "be_mode": "tp1_plus_10",
+  "exit_family": "E2",
+  "tp1_close_pct": 50,
+  "lock_pts": 50
+}

@@ -1,0 +1,15 @@
+{
+  "candidate_id": "baseline_cluster_hgb_k2_tp1L10_tp1S10_tp250_sl0.10_E2_tp1c50_lock50_betp1_th0.65",
+  "pass_win65_cnt": 5,
+  "pass_sh80_cnt": 4,
+  "pass_mdd_cnt": 5,
+  "per_fold_min_n": 81,
+  "sharpe_med": 0.9885180371310583,
+  "sharpe_min": 0.7212458682096896,
+  "win_med": 0.9047619047619048,
+  "win_min": 0.839622641509434,
+  "mdd_worst": -0.013323999999999978,
+  "tpm": 3.4642857142857144,
+  "worst_fold": "Fold2",
+  "data_sparse": false
+}

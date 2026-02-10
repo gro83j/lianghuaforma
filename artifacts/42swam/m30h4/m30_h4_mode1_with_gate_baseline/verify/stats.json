@@ -1,0 +1,19 @@
+{
+  "n_trades_total": 159,
+  "n_long": 94,
+  "n_short": 65,
+  "success_rate": 0.4779874213836478,
+  "exit_type_counts": {
+    "FAIL_SL": 81,
+    "BE": 33,
+    "TP2": 43,
+    "TIME": 2
+  },
+  "mean_pnl_total": 5.18018867924529,
+  "median_pnl_total": -3.559999999999946,
+  "contract_size": 100.0,
+  "avg_days_per_trade": 8.660377358490566,
+  "sharpe": 1.3769032868098614,
+  "max_drawdown": -0.13064361191162369,
+  "success_rate_tp1": 0.4779874213836478
+}

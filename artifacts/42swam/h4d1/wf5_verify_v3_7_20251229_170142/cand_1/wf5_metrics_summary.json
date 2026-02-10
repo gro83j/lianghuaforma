@@ -1,0 +1,15 @@
+{
+  "candidate_id": "d1_only_logreg_k0_tp1L30_tp1S30_tp240_sl0.06_E2_tp1c50_lock50_betp1_th0.65",
+  "pass_win65_cnt": 5,
+  "pass_sh80_cnt": 5,
+  "pass_mdd_cnt": 5,
+  "per_fold_min_n": 23,
+  "sharpe_med": 1.255139831450811,
+  "sharpe_min": 1.0832770111061754,
+  "win_med": 0.9210526315789473,
+  "win_min": 0.8695652173913043,
+  "mdd_worst": -0.00013400000000001456,
+  "tpm": 1.005952380952381,
+  "worst_fold": "Fold4",
+  "data_sparse": false
+}

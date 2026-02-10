@@ -1,0 +1,41 @@
+M30_H1_Mode1_with_Gate_Optimized - Final One-Click Doc
+
+[Version]
+Strategy: M30_H1_Mode1_with_Gate_Optimized
+Selection: selection_method=top_q, top_q=0.25, atr_cap_quantile=None
+Calibration: isotonic
+Label: tp1_hit
+Fixed Date: 2025-12-24
+
+[One-Click Commands]
+1) Backtest (default splits 2010-2015 / 2015-2020 / 2020-2023)
+python /Users/junnanma/trend_project/src/backtest_strategy.py \
+  --data_path "/Users/junnanma/Desktop/42swam/data_xauusd" \
+  --train_data_range "2010-01-01, 2015-12-31" \
+  --test_data_range "2015-01-01, 2020-12-31" \
+  --verify_data_range "2020-01-01, 2023-12-31" \
+  --strategy "M30_H1_Mode1_with_Gate_Optimized"
+
+2) Rolling OOS (v3 fixed)
+python /Users/junnanma/trend_project/src/next_iter_step2_calibration_v3.py
+
+[Key Paths]
+final_params.json: /Users/junnanma/reports/m30_h1_mode1_with_gate_optimized/final_params.json
+final_report.md: /Users/junnanma/reports/m30_h1_mode1_with_gate_optimized/final_report.md
+rolling_oos_comparison_v3.csv: /Users/junnanma/reports/m30_h1_mode1_with_gate_optimized/next_iter/rolling_oos_comparison_v3.csv
+final_recommendation_v3.md: /Users/junnanma/reports/m30_h1_mode1_with_gate_optimized/next_iter/final_recommendation_v3.md
+score_model_path: /Users/junnanma/reports/m30_h1_mode1_with_gate/ScoreFilterm30h1.joblib
+score_config_path: /Users/junnanma/reports/m30_h1_mode1_with_gate/ScoreFilterm30h1.json
+
+[Outputs]
+Backtest outputs:
+- /Users/junnanma/reports/m30_h1_mode1_with_gate_optimized/train/
+- /Users/junnanma/reports/m30_h1_mode1_with_gate_optimized/test/
+- /Users/junnanma/reports/m30_h1_mode1_with_gate_optimized/verify/
+Rolling OOS output:
+- /Users/junnanma/reports/m30_h1_mode1_with_gate_optimized/next_iter/rolling_oos_comparison_v3.csv
+
+[Quick Checks]
+- Runtime banner should include: Final Defaults: method=top_q q=0.25 atr_cap_quantile=None label=tp1_hit
+- If model/data not found: verify /Users/junnanma/reports/m30_h1_mode1_with_gate/ScoreFilterm30h1.joblib and /Users/junnanma/Desktop/42swam/data_xauusd
+- If results differ: ensure strategy name is exactly M30_H1_Mode1_with_Gate_Optimized and no extra params override defaults

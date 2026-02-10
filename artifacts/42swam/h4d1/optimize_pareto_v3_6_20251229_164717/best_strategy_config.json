@@ -1,0 +1,45 @@
+{
+  "family": "d1_only",
+  "k_cluster": 0,
+  "exit_family": "E2",
+  "tp1_close_pct": 50,
+  "lock_pts": 50,
+  "tp2_level": 40,
+  "sl_factor": 0.06,
+  "tp1_long": 30,
+  "tp1_short": 30,
+  "model_type": "logreg",
+  "threshold": 0.65,
+  "be_mode": "tp1",
+  "wf_metrics": {
+    "wf_winrate_min": 0.8529411764705882,
+    "wf_sharpe_min": 1.110551535330311,
+    "wf_sharpe_med": 1.206788835779781,
+    "wf_mdd_worst_pct": -0.00013399999999983266,
+    "folds_pass_win65": 3,
+    "folds_pass_sh80": 3,
+    "fold1_win_rate_pnl": 0.9,
+    "fold1_sharpe_raw": 1.110551535330311,
+    "all_tpm": 1.6964285714285714
+  },
+  "wf_folds": [
+    [
+      "2014-01-01",
+      "2016-12-31"
+    ],
+    [
+      "2017-01-01",
+      "2019-12-31"
+    ],
+    [
+      "2020-01-01",
+      "2023-12-31"
+    ]
+  ],
+  "hard_constraints": {
+    "per_fold_min_n": 8,
+    "wf_mdd_worst_pct": -0.3,
+    "wf_winrate_min": 0.35,
+    "wf_sharpe_min": -0.2
+  }
+}

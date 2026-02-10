@@ -1,0 +1,177 @@
+{
+  "label": "tp1_hit",
+  "long": {
+    "rules_or": "entry_rel_fib100 > -0.919211 and h4_di20p <= 16.759650 and h4_rsi14 > 28.643888 OR entry_rel_fib100 <= -0.919211 and h4_di14p <= 15.869530 and m30_atr14_ratio <= 1.057682 OR entry_rel_fib100 > -0.919211 and h4_di20p > 16.759650 and m30_roc10 > 0.016078 OR entry_rel_fib100 > -0.919211 and h4_di20p <= 16.759650 and h4_rsi14 <= 28.643888"
+  },
+  "short": {
+    "rules_or": "entry_rel_fib100 <= 0.821800 OR entry_rel_fib100 > 0.821800 and m30_di14p > 22.825665 and m30_cci20 > 61.421772 OR entry_rel_fib100 > 0.821800 and m30_di14p <= 22.825665 OR entry_rel_fib100 > 0.821800 and m30_di14p > 22.825665 and m30_cci20 <= 61.421772 and m30_roc10 <= -0.017321"
+  },
+  "metrics": {
+    "long": {
+      "rules_or": "entry_rel_fib100 > -0.919211 and h4_di20p <= 16.759650 and h4_rsi14 > 28.643888 OR entry_rel_fib100 <= -0.919211 and h4_di14p <= 15.869530 and m30_atr14_ratio <= 1.057682 OR entry_rel_fib100 > -0.919211 and h4_di20p > 16.759650 and m30_roc10 > 0.016078 OR entry_rel_fib100 > -0.919211 and h4_di20p <= 16.759650 and h4_rsi14 <= 28.643888",
+      "coverage": 0.7531645569620253,
+      "precision": 0.7,
+      "trades": 170,
+      "success": 119,
+      "by_year": {
+        "2010": {
+          "precision": 0.8,
+          "coverage": 0.05063291139240506,
+          "trades": 10
+        },
+        "2011": {
+          "precision": 0.5625,
+          "coverage": 0.056962025316455694,
+          "trades": 16
+        },
+        "2012": {
+          "precision": 0.4666666666666667,
+          "coverage": 0.04430379746835443,
+          "trades": 15
+        },
+        "2013": {
+          "precision": 0.75,
+          "coverage": 0.0379746835443038,
+          "trades": 8
+        },
+        "2014": {
+          "precision": 0.5,
+          "coverage": 0.02531645569620253,
+          "trades": 8
+        },
+        "2015": {
+          "precision": 0.8461538461538461,
+          "coverage": 0.13924050632911392,
+          "trades": 26
+        },
+        "2016": {
+          "precision": 0.8571428571428571,
+          "coverage": 0.0379746835443038,
+          "trades": 7
+        },
+        "2017": {
+          "precision": 0.4,
+          "coverage": 0.012658227848101266,
+          "trades": 5
+        },
+        "2018": {
+          "precision": 0.7,
+          "coverage": 0.04430379746835443,
+          "trades": 10
+        },
+        "2019": {
+          "precision": 0.8333333333333334,
+          "coverage": 0.06329113924050633,
+          "trades": 12
+        },
+        "2020": {
+          "precision": 0.75,
+          "coverage": 0.0759493670886076,
+          "trades": 16
+        },
+        "2021": {
+          "precision": 0.4166666666666667,
+          "coverage": 0.03164556962025317,
+          "trades": 12
+        },
+        "2022": {
+          "precision": 0.8666666666666667,
+          "coverage": 0.08227848101265822,
+          "trades": 15
+        },
+        "2023": {
+          "precision": 0.8,
+          "coverage": 0.05063291139240506,
+          "trades": 10
+        }
+      },
+      "model_metrics": {
+        "auc": 1.0,
+        "pr_auc": 1.0
+      }
+    },
+    "short": {
+      "rules_or": "entry_rel_fib100 <= 0.821800 OR entry_rel_fib100 > 0.821800 and m30_di14p > 22.825665 and m30_cci20 > 61.421772 OR entry_rel_fib100 > 0.821800 and m30_di14p <= 22.825665 OR entry_rel_fib100 > 0.821800 and m30_di14p > 22.825665 and m30_cci20 <= 61.421772 and m30_roc10 <= -0.017321",
+      "coverage": 0.9203539823008849,
+      "precision": 0.6419753086419753,
+      "trades": 162,
+      "success": 104,
+      "by_year": {
+        "2010": {
+          "precision": 0.7333333333333333,
+          "coverage": 0.09734513274336283,
+          "trades": 15
+        },
+        "2011": {
+          "precision": 0.5833333333333334,
+          "coverage": 0.061946902654867256,
+          "trades": 12
+        },
+        "2012": {
+          "precision": 0.5,
+          "coverage": 0.017699115044247787,
+          "trades": 4
+        },
+        "2013": {
+          "precision": 0.5714285714285714,
+          "coverage": 0.035398230088495575,
+          "trades": 7
+        },
+        "2014": {
+          "precision": 0.2,
+          "coverage": 0.017699115044247787,
+          "trades": 10
+        },
+        "2015": {
+          "precision": 0.6666666666666666,
+          "coverage": 0.07079646017699115,
+          "trades": 12
+        },
+        "2016": {
+          "precision": 0.6666666666666666,
+          "coverage": 0.035398230088495575,
+          "trades": 6
+        },
+        "2017": {
+          "precision": 0.6363636363636364,
+          "coverage": 0.061946902654867256,
+          "trades": 11
+        },
+        "2018": {
+          "precision": 1.0,
+          "coverage": 0.02654867256637168,
+          "trades": 3
+        },
+        "2019": {
+          "precision": 0.4444444444444444,
+          "coverage": 0.07079646017699115,
+          "trades": 18
+        },
+        "2020": {
+          "precision": 0.7560975609756098,
+          "coverage": 0.2743362831858407,
+          "trades": 41
+        },
+        "2021": {
+          "precision": 0.7142857142857143,
+          "coverage": 0.04424778761061947,
+          "trades": 7
+        },
+        "2022": {
+          "precision": 0.6666666666666666,
+          "coverage": 0.05309734513274336,
+          "trades": 9
+        },
+        "2023": {
+          "precision": 0.8571428571428571,
+          "coverage": 0.05309734513274336,
+          "trades": 7
+        }
+      },
+      "model_metrics": {
+        "auc": 1.0,
+        "pr_auc": 1.0
+      }
+    }
+  }
+}

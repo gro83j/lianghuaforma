@@ -1,0 +1,15 @@
+{
+  "candidate_id": "baseline_cluster_hgb_k2_tp1L10_tp1S10_tp250_sl0.10_E2_tp1c50_lock50_betp1_th0.65",
+  "family": "baseline_cluster",
+  "k_cluster": 2,
+  "model_type": "hgb",
+  "threshold": 0.65,
+  "sl_factor": 0.1,
+  "tp1_long": 10,
+  "tp1_short": 10,
+  "tp2_level": 50,
+  "be_mode": "tp1",
+  "exit_family": "E2",
+  "tp1_close_pct": 50,
+  "lock_pts": 50
+}

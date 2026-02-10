@@ -1,0 +1,31 @@
+{
+  "model_path": "D:\\projectmt5\\trend_project\\reports\\m15_m30_mode1_with_gate\\scorefilter_m15m30.joblib",
+  "threshold": 0.7400000000000004,
+  "metrics": {
+    "sharpe": 3.8942736183899815,
+    "avg_days_per_trade": 5.172523961661342,
+    "success_rate": 0.9840255591054313
+  },
+  "top_features": [
+    "RET1_last",
+    "RET1_min",
+    "ATR14_Z_last",
+    "RET5_min",
+    "BB_WIDTH_DELTA_last",
+    "KDJ_J_max",
+    "RSI10_max",
+    "STD_ATR_RATIO_last",
+    "BB_WIDTH_DELTA_max",
+    "RET1_max",
+    "CLOSE_POS10_max",
+    "CCI14_max",
+    "ATR14_Z_max",
+    "CCI20_min",
+    "BB_WIDTH_DELTA_mean",
+    "CLOSE_POS10_min",
+    "RET5_max",
+    "ATR14_Z_min",
+    "KDJ_J_mean",
+    "CCI20_max"
+  ]
+}

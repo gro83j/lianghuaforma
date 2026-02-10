@@ -1,0 +1,43 @@
+# Prefilter Metrics Compare
+
+## train
+- tp1_hit_rate: 0.5556 (baseline 0.4752)
+- win_rate: 0.5778 (baseline 0.5050)
+- avg_pnl: 6.0606 (baseline 4.4120)
+- profit_per_year: 138.35 (baseline 150.56)
+- sharpe_simple: 0.3103 (baseline 0.2304)
+- sharpe: 1.1494 (baseline 1.1003)
+- max_drawdown: -0.0546 (baseline -0.0541)
+- sum_pnl: 818.18 (baseline 891.22)
+- freq_per_year: 22.83 (baseline 34.13)
+- n_trades: 135 (baseline 202)
+- n_long: 80 (baseline 133)
+- n_short: 55 (baseline 69)
+
+## test
+- tp1_hit_rate: 0.5455 (baseline 0.4806)
+- win_rate: 0.5606 (baseline 0.4951)
+- avg_pnl: 5.1923 (baseline 3.4138)
+- profit_per_year: 120.53 (baseline 119.64)
+- sharpe_simple: 0.3041 (baseline 0.2181)
+- sharpe: 1.2472 (baseline 1.1977)
+- max_drawdown: -0.0427 (baseline -0.0564)
+- sum_pnl: 685.38 (baseline 703.24)
+- freq_per_year: 23.21 (baseline 35.04)
+- n_trades: 132 (baseline 206)
+- n_long: 70 (baseline 111)
+- n_short: 62 (baseline 95)
+
+## verify
+- tp1_hit_rate: 0.5603 (baseline 0.4780)
+- win_rate: 0.5603 (baseline 0.4780)
+- avg_pnl: 7.7584 (baseline 5.1802)
+- profit_per_year: 238.72 (baseline 218.47)
+- sharpe_simple: 0.3729 (baseline 0.2580)
+- sharpe: 1.6088 (baseline 1.3769)
+- max_drawdown: -0.0752 (baseline -0.1306)
+- sum_pnl: 899.97 (baseline 823.65)
+- freq_per_year: 30.77 (baseline 42.17)
+- n_trades: 116 (baseline 159)
+- n_long: 61 (baseline 94)
+- n_short: 55 (baseline 65)

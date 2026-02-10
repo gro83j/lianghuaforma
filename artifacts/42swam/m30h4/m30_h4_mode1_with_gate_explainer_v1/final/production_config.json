@@ -1,0 +1,132 @@
+{
+  "deployment_mode": "prefilter_only",
+  "rules": {
+    "long_rule_text": "-2367 <= h4_cci20_int <= -1050",
+    "long_rule_json_path": "\\Users\\junnanma\\reports\\m30_h4_mode1_with_gate_explainer_v1\\explainer\\best_rules_long.json",
+    "short_rule_text": "m30_range_mean6_int >= 2",
+    "short_rule_json_path": "\\Users\\junnanma\\reports\\m30_h4_mode1_with_gate_explainer_v1\\explainer\\best_rules_short.json",
+    "complexity_long": 1,
+    "complexity_short": 1
+  },
+  "freq_policy": {
+    "min_freq_ratio_vs_baseline": 0.4
+  },
+  "evaluation_snapshot": {
+    "train": {
+      "baseline": {
+        "sharpe": 1.1002819666997772,
+        "sharpe_simple": 0.23036094649438021,
+        "max_drawdown": -0.05407963267125416,
+        "tp1_hit_rate": 0.4752475247524752,
+        "win_rate": 0.504950495049505,
+        "sum_pnl": 891.2200000000018,
+        "profit_per_year": 150.5634158186867,
+        "freq_per_year": 34.12604070305273,
+        "n_trades": 202,
+        "n_long": 133,
+        "n_short": 69
+      },
+      "prefilter": {
+        "sharpe": 1.1494126704464254,
+        "sharpe_simple": 0.3102708618058748,
+        "max_drawdown": -0.054607907491165245,
+        "tp1_hit_rate": 0.5555555555555556,
+        "win_rate": 0.5777777777777777,
+        "sum_pnl": 818.1800000000019,
+        "profit_per_year": 138.3519652777781,
+        "freq_per_year": 22.828125,
+        "n_trades": 135,
+        "n_long": 80,
+        "n_short": 55
+      },
+      "freq_ratio": 0.6683168316831684
+    },
+    "test": {
+      "baseline": {
+        "sharpe": 1.1977078296463062,
+        "sharpe_simple": 0.2180953663252241,
+        "max_drawdown": -0.05636862692803508,
+        "tp1_hit_rate": 0.48058252427184467,
+        "win_rate": 0.49514563106796117,
+        "sum_pnl": 703.2400000000011,
+        "profit_per_year": 119.63596180717298,
+        "freq_per_year": 35.04494643688868,
+        "n_trades": 206,
+        "n_long": 111,
+        "n_short": 95
+      },
+      "prefilter": {
+        "sharpe": 1.2471602823556864,
+        "sharpe_simple": 0.30411921697506833,
+        "max_drawdown": -0.04271233069426049,
+        "tp1_hit_rate": 0.5454545454545454,
+        "win_rate": 0.5606060606060606,
+        "sum_pnl": 685.3800000000019,
+        "profit_per_year": 120.527224362061,
+        "freq_per_year": 23.212806933076553,
+        "n_trades": 132,
+        "n_long": 70,
+        "n_short": 62
+      },
+      "freq_ratio": 0.6407766990291263
+    },
+    "verify": {
+      "baseline": {
+        "sharpe": 1.3769032868098614,
+        "sharpe_simple": 0.25796205813233464,
+        "max_drawdown": -0.13064361191162369,
+        "tp1_hit_rate": 0.4779874213836478,
+        "win_rate": 0.4779874213836478,
+        "sum_pnl": 823.650000000001,
+        "profit_per_year": 218.47361111111135,
+        "freq_per_year": 42.174836601307184,
+        "n_trades": 159,
+        "n_long": 94,
+        "n_short": 65
+      },
+      "prefilter": {
+        "sharpe": 1.6088281335623067,
+        "sharpe_simple": 0.37286388788242747,
+        "max_drawdown": -0.07517520298848483,
+        "tp1_hit_rate": 0.5603448275862069,
+        "win_rate": 0.5603448275862069,
+        "sum_pnl": 899.9700000000009,
+        "profit_per_year": 238.7175326797388,
+        "freq_per_year": 30.769063180827885,
+        "n_trades": 116,
+        "n_long": 61,
+        "n_short": 55
+      },
+      "freq_ratio": 0.7295597484276729
+    },
+    "lockbox": {
+      "baseline": {
+        "sharpe": 1.3810504944057322,
+        "sharpe_simple": 0.29616031489536726,
+        "max_drawdown": -0.07192009987515605,
+        "tp1_hit_rate": 0.47368421052631576,
+        "win_rate": 0.47368421052631576,
+        "sum_pnl": 639.7400000000005,
+        "profit_per_year": 224.67791826923093,
+        "freq_per_year": 40.03701923076923,
+        "n_trades": 114,
+        "n_long": 77,
+        "n_short": 37
+      },
+      "prefilter": {
+        "sharpe": 1.6458982404397475,
+        "sharpe_simple": 0.4143304715110878,
+        "max_drawdown": -0.031980024968789225,
+        "tp1_hit_rate": 0.5555555555555556,
+        "win_rate": 0.5555555555555556,
+        "sum_pnl": 670.9600000000005,
+        "profit_per_year": 235.6424423076925,
+        "freq_per_year": 28.44735576923077,
+        "n_trades": 81,
+        "n_long": 51,
+        "n_short": 30
+      },
+      "freq_ratio": 0.7105263157894737
+    }
+  }
+}

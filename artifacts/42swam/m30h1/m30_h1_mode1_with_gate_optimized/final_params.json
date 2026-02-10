@@ -1,0 +1,11 @@
+{
+    "strategy":  "M30_H1_Mode1_with_Gate_Optimized",
+    "selection_method":  "top_q",
+    "top_q":  0.25,
+    "atr_cap_quantile":  null,
+    "calibration_method":  "isotonic",
+    "label":  "tp1_hit",
+    "score_config_path":  "/Users/junnanma/reports/m30_h1_mode1_with_gate/ScoreFilterm30h1.json",
+    "score_model_path":  "/Users/junnanma/reports/m30_h1_mode1_with_gate/ScoreFilterm30h1.joblib",
+    "fixed_date":  "2025-12-24"
+}

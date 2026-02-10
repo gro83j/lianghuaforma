@@ -1,0 +1,96 @@
+【0. 元信息】
+- 冻结名称：h4d1model1
+- 生成时间：2025-12-29T17:14:58
+- freeze run_id：20251229_171458
+- repo_root：/Users/junnanma/trend_project
+- git_commit：unknown
+- python_version：Python 3.13.5
+- 关键脚本：src/h4d1_freeze_h4d1model1_v1.py
+- 关键脚本：src/h4d1_optimize_pareto_v1.py
+- 关键脚本：src/h4d1_wf5_verify_v3_7.py
+- 关键脚本：src/h4d1_candidate_generator_v3_3.py
+- v3.7_dir：new_process/h4d1/wf5_verify_v3_7/20251229_170142
+- v3.6_dir：new_process/h4d1/optimize_pareto_v3_6_e2_localsearch_fold1_diag/20251229_164717
+
+【1. 数据与时间框架】
+- 实际使用周期：H4 + D1
+- H4 数据路径：/Users/junnanma/trend_project/data_tf/xauusd_H4.csv
+- D1 数据路径：/Users/junnanma/trend_project/data_tf/xauusd_D1.csv
+- 防未来：每根 H4 只能使用已收盘 D1
+- D1→H4 映射：d1_only 使用当日 D1；baseline 使用前一日 D1
+- WF5 folds：2010-2012, 2013-2015, 2016-2018, 2019-2020, 2021-2023
+- WF5 用途：每折独立回放评估（win_rate_pnl/sharpe_raw/mdd_pct/tpm）
+
+【2. 策略结构总览】
+- 组合：d1_only + ML gate + E2 runner_lockprofit
+- D1 信号：MACD(5,13,5) 基于 HL2，零下金叉做多、零上死叉做空（仅首次）
+- H4 Gate 特征：
+  h4_atr14_ratio_l0, h4_atr14_ratio_l1, h4_atr14_ratio_l2, h4_atr14_ratio_l3, h4_atr14_ratio_l4, h4_adx20_l0, h4_adx20_l1, h4_adx20_l2, h4_adx20_l3, h4_adx20_l4, h4_di_spread_l0, h4_di_spread_l1, h4_di_spread_l2, h4_di_spread_l3, h4_di_spread_l4, h4_roc20_l0, h4_roc20_l1, h4_roc20_l2, h4_roc20_l3, h4_roc20_l4, h4_rsi14_l0, h4_rsi14_l1, h4_rsi14_l2, h4_rsi14_l3, h4_rsi14_l4, h4_bb_width_l0, h4_bb_width_l1, h4_bb_width_l2, h4_bb_width_l3, h4_bb_width_l4, h4_macd_hist_l0, h4_macd_hist_l1, h4_macd_hist_l2, h4_macd_hist_l3, h4_macd_hist_l4
+- D1 Gate 特征：
+  d1_macd_gate, d1_sig_gate, d1_macd_anchor, d1_sig_anchor, side_flag
+- 模型：logreg/hgb（cand1 使用 logreg + StandardScaler）
+- 训练方式：仅 fit(train_pre_fold_start)；其余折只 infer
+- 决策阈值：th=0.65
+- 交易条件：prob>=th 才开仓
+
+【3. 入场逻辑（伪代码）】
+1) 每日 D1 收盘后计算 macd_gate/sig_gate (5,13,5, HL2)。
+2) 若 macd/sig 同为负，允许下一次零下金叉做多；若同为正，允许下一次零上死叉做空。
+3) 金叉/死叉发生日为 decision_time，entry_time=下一个 H4 开盘 (signal_day+1h)。
+4) fib0/fib100 取信号日 D1 low/high (多) 或 high/low (空)。
+5) 构建 H4/D1 特征并送入 ML gate；prob>=th 则允许交易。
+
+【4. 出场/风控逻辑（E2 runner_lockprofit）】
+- 初始 SL：sl_factor * rng (rng = fib100 - fib0)
+- TP1：tp1_long=30 tp1_short=30 (fib%)
+- TP1 平仓比例：tp1_close_pct=50%
+- BE 规则：be_mode=tp1 → TP1 后允许 BE 触发
+- TP2：tp2_level=40 (fib%)
+- 锁盈：lock_pts=50 (fib% of rng)
+- 退出类型：TP1_FULL/TP2/LOCK_PROFIT/BE/FAIL_SL/END
+- 胜率口径：success_rate_tp1 vs win_rate_pnl（本策略以 win_rate_pnl 为胜率）
+
+【5. 参数（冻结参数）】
+{
+  "candidate_id": "d1_only_logreg_k0_tp1L30_tp1S30_tp240_sl0.06_E2_tp1c50_lock50_betp1_th0.65",
+  "family": "d1_only",
+  "k_cluster": 0,
+  "model_type": "logreg",
+  "threshold": 0.65,
+  "sl_factor": 0.06,
+  "tp1_long": 30,
+  "tp1_short": 30,
+  "tp2_level": 40,
+  "be_mode": "tp1",
+  "exit_family": "E2",
+  "tp1_close_pct": 50,
+  "lock_pts": 50
+}
+
+参数表（分类）
+- entry_family: d1_only
+- model_type: logreg threshold: 0.65
+- exit_family: E2 tp1_close_pct: 50 lock_pts: 50
+- tp1_long: 30 tp1_short: 30 tp2_level: 40
+- sl_factor: 0.06 be_mode: tp1
+
+【6. 结果复现方法（命令级）】
+1) WF5 复现（cand1）：
+   python src/h4d1_wf5_verify_v3_7.py --v36_dir new_process/h4d1/optimize_pareto_v3_6_e2_localsearch_fold1_diag/20251229_164717 --out_mode wf5_replay_h4d1model1 --wf_folds "2010-2012,2013-2015,2016-2018,2019-2020,2021-2023" --initial_equity 10000 --topk 1
+   输出目录：new_process/h4d1/wf5_replay_h4d1model1/<run_id>
+   预期：pass_win65_cnt=5, pass_sh80_cnt=5（见 v3.7 cand1）
+2) 单段回放（Fold4 2019-2020）：
+   python src/h4d1_wf5_verify_v3_7.py --v36_dir new_process/h4d1/optimize_pareto_v3_6_e2_localsearch_fold1_diag/20251229_164717 --out_mode wf5_spotcheck_h4d1model1 --wf_folds "2019-2020" --initial_equity 10000 --topk 1
+   输出目录：new_process/h4d1/wf5_spotcheck_h4d1model1/<run_id>
+   预期：Fold4(2019-2020) win_rate_pnl≈0.870 sharpe_raw≈1.083 tpm≈0.958
+
+【7. 关键产物清单（冻结包内包含）】
+- h4d1model1_config.json
+- wf5_metrics_by_fold.json
+- wf5_metrics_summary.json
+- trades_fold1.csv ... trades_fold5.csv
+- wf5_compare_top3.csv
+- summary_wf5.md
+- wf_candidate_scores.csv
+- fold1_counterfactual_lock0_vs_lockX.json
+- h4d1model1.txt

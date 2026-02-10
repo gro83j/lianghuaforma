@@ -1,0 +1,11 @@
+{
+  "rule": "-2367 <= h4_cci20_int <= -1050",
+  "conditions": [
+    {
+      "feature": "h4_cci20_int",
+      "op": "between",
+      "low": -2367,
+      "high": -1050
+    }
+  ]
+}

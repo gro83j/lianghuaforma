@@ -1,0 +1,29 @@
+M15M30模型一评分过滤器
+
+基础策略
+- M15_M30_Mode1_with_Gate
+
+过滤器配置
+- ExplainFilter v2: disabled
+- ExplainFilter M15M30: disabled
+- ScoreFilter: enabled
+  - Model: /Users/junnanma/reports/m15_m30_mode1_with_gate/scorefilter_m15m30.joblib
+  - Threshold: 0.30
+
+回测参数
+- Data path: /Users/junnanma/Desktop/42swam/data_xauusd
+- Range: 2015-01-01, 2023-12-31
+- Lots: 0.01
+
+回测命令
+python /Users/junnanma/trend_project/src/backtest_strategy.py \
+  --data_path "/Users/junnanma/Desktop/42swam/data_xauusd" \
+  --train_data_range "2010-01-01, 2015-12-31" \
+  --test_data_range "2015-01-01, 2020-12-31" \
+  --verify_data_range "2020-01-01, 2023-12-31" \
+  --strategy "M15_M30_Mode1_with_Gate" \
+  --disable_explain_filter \
+  --scorefilter_model_path "/Users/junnanma/reports/m15_m30_mode1_with_gate/scorefilter_m15m30.joblib" \
+  --scorefilter_threshold 0.30 \
+  --backtest_range "2015-01-01, 2023-12-31" \
+  --lots 0.01

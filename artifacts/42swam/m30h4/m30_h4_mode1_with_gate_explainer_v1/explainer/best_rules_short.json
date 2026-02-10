@@ -1,0 +1,10 @@
+{
+  "rule": "m30_range_mean6_int >= 2",
+  "conditions": [
+    {
+      "feature": "m30_range_mean6_int",
+      "op": ">=",
+      "threshold": 2
+    }
+  ]
+}

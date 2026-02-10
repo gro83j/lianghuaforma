@@ -1,0 +1,31 @@
+{
+  "model_path": "D:\\Users\\junnanma\\reports\\m30_h1_mode1_with_gate\\scorefilter_m30h1.joblib",
+  "threshold": 0.3,
+  "metrics": {
+    "sharpe": 1.7654169697454782,
+    "avg_days_per_trade": 19.305389221556887,
+    "success_rate": 0.9580838323353293
+  },
+  "top_features": [
+    "KDJ_J_min",
+    "H1_CLOSE_POS5_min",
+    "RET5_max",
+    "H1_CLOSE_POS10_min",
+    "RET10_last",
+    "CLOSE_POS10_last",
+    "ROC14_max",
+    "ROC10_last",
+    "CCI14_max",
+    "H1_CLOSE_POS10_last",
+    "RET5_mean",
+    "CLOSE_POS10_mean",
+    "ROC14_last",
+    "H1_STD_ATR_RATIO_last",
+    "H1_EMA50_SLOPE_max",
+    "ROC10_max",
+    "CLOSE_POS5_last",
+    "STDDEV20_last",
+    "CCI20_last",
+    "ATR14_Z_max"
+  ]
+}

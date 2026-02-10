@@ -1,0 +1,10 @@
+candidate_id: L00164
+mode: ml_only
+tp1_frac: 0.2
+tp2_frac: 0.72
+sl_frac: 0.26
+q_short: 0.4
+q_long: 0.85
+long_rule: NONE
+short_rule: NONE
+source_run_dir: /Users/junnanma/trend_project/new_process/h1_h4/mode1_with_gate_entry_quality_prefilter_exitopt_v1/20251227_214851

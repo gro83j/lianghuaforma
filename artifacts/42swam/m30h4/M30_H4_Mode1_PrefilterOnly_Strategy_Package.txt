@@ -1,0 +1,116 @@
+0) 概览
+- 策略名称：M30_H4 Mode1 + Gate + PrefilterOnly (v1)
+- 目标：提升 tp1_hit_rate / win_rate / 风险调整收益，并控制回撤
+- 成功定义：tp1_hit==1 视为成功
+
+1) 输入数据与依赖
+- baseline trades 路径（train/test/verify）
+  - /Users/junnanma/reports/m30_h4_mode1_with_gate_baseline/train/trades.csv
+  - /Users/junnanma/reports/m30_h4_mode1_with_gate_baseline/test/trades.csv
+  - /Users/junnanma/reports/m30_h4_mode1_with_gate_baseline/verify/trades.csv
+- lockbox 切分说明
+  - 基于 baseline trades 的合并时间序列（train+test+verify），按 trigger_time 升序排序
+  - 最后 20% 作为 lockbox（不参与任何阈值/模型选择）
+- features 数据
+  - 本策略需要 features_dataset.csv 以计算 *_int 规则字段（h4_cci20_int、m30_range_mean6_int）
+  - 使用自动定位：在 /Users/junnanma/reports 与 /Users/junnanma/trend_project 递归查找最新 mtime 文件
+  - 本次实际路径：/Users/junnanma/reports/m30_h4_mode1_with_gate_baseline/analysis/features_dataset.csv
+- 关键脚本路径
+  - /Users/junnanma/trend_project/src/m30h4_prefilter_only_eval_v1.py
+  - /Users/junnanma/trend_project/src/m30h4_explainer_prefilter_ml_v1.py
+- 冻结配置路径
+  - /Users/junnanma/reports/m30_h4_mode1_with_gate_explainer_v1/final/production_config.json
+  - /Users/junnanma/reports/m30_h4_mode1_with_gate_explainer_v1/final/launch_readme.md
+
+2) 策略核心逻辑（规则流程）
+- Step A：基础策略产生候选 trade
+  - 来源：baseline trades.csv（必需字段：trigger_time, side, pnl_total, tp1_hit, exit_time）
+- Step B：根据 side 选择过滤器规则
+  - side=long 使用 long_rule
+  - side=short 使用 short_rule
+- Step C：规则字段定义与计算来源
+  - *_int 字段是由 features_dataset.csv 中的连续特征整数化得到
+  - 对整数尺度指标（如 CCI/RSI/ADX 等）按 round 近似保持整数
+  - 对连续小数特征采用缩放后再 round，缩放规则示例：
+    - ret/roc 乘以 10000
+    - ratio 乘以 1000
+    - atr 乘以 100 或 1000（依分位数范围调整）
+  - 规则字段：
+    - h4_cci20_int 来源 h4_cci20
+    - m30_range_mean6_int 来源 m30_range_mean6
+- Step D：通过过滤器 => 该 trade 保留；不通过 => 丢弃
+- Step E：产出 prefilter trades.csv
+  - 输出目录：/Users/junnanma/reports/m30_h4_mode1_with_gate_explainer_v1/prefilter_only_eval/<segment>/trades.csv
+  - segment 包含 train/test/verify/lockbox
+  - 列字段与 baseline trades 基本一致（包含原始标签列）
+
+3) 过滤器规则（逐字 + 参数清单）
+- long_rule：-2367 <= h4_cci20_int <= -1050
+- short_rule：m30_range_mean6_int >= 2
+- complexity：long=1, short=1
+- 规则 JSON 文件路径：
+  - /Users/junnanma/reports/m30_h4_mode1_with_gate_explainer_v1/explainer/best_rules_long.json
+  - /Users/junnanma/reports/m30_h4_mode1_with_gate_explainer_v1/explainer/best_rules_short.json
+- 规则覆盖率（pass/total）
+  - long_rule
+    - train: 80/133 (0.602)
+    - test: 70/111 (0.631)
+    - verify: 61/94 (0.649)
+    - lockbox: 51/77 (0.662)
+  - short_rule
+    - train: 55/69 (0.797)
+    - test: 62/95 (0.653)
+    - verify: 55/65 (0.846)
+    - lockbox: 30/37 (0.811)
+  - combined prefilter freq_ratio（baseline vs prefilter）
+    - test: 0.641
+    - verify: 0.730
+    - lockbox: 0.711
+
+4) 绩效指标口径（公式/口径）
+- tp1_hit_rate：tp1_hit==1 的比例
+- win_rate：pnl_total > 0 的比例（与 tp1_hit 成功定义不同）
+- sum_pnl：pnl_total 求和
+- profit_y：profit_per_year = avg_pnl * freq_per_year
+- max_drawdown：metrics_from_trades_df 输出的 max_drawdown
+- sharpe：metrics_from_trades_df 输出的 sharpe
+- sharpe_simple：mean(pnl_total) / std(pnl_total)
+- freq_y：freq_per_year = n_trades / (span_days/365.25) （span_days 由 trigger_time 覆盖区间计算）
+- freq_ratio：prefilter n_trades / baseline n_trades（按 segment）
+
+5) Baseline vs Prefilter 结果（FINAL_LAUNCH_BLOCK）
+- segment=test
+  - baseline: tp1=0.4806 win=0.4951 sum_pnl=703.24 profit_y=119.64 max_dd=-0.0564 sharpe_simple=0.2181 sharpe=1.1977 n_trades=206 freq_y=35.04 freq_ratio=1.000
+  - prefilter: tp1=0.5455 win=0.5606 sum_pnl=685.38 profit_y=120.53 max_dd=-0.0427 sharpe_simple=0.3041 sharpe=1.2472 n_trades=132 freq_y=23.21 freq_ratio=0.641
+- segment=verify
+  - baseline: tp1=0.4780 win=0.4780 sum_pnl=823.65 profit_y=218.47 max_dd=-0.1306 sharpe_simple=0.2580 sharpe=1.3769 n_trades=159 freq_y=42.17 freq_ratio=1.000
+  - prefilter: tp1=0.5603 win=0.5603 sum_pnl=899.97 profit_y=238.72 max_dd=-0.0752 sharpe_simple=0.3729 sharpe=1.6088 n_trades=116 freq_y=30.77 freq_ratio=0.730
+- segment=lockbox
+  - baseline: tp1=0.4737 win=0.4737 sum_pnl=639.74 profit_y=224.68 max_dd=-0.0719 sharpe_simple=0.2962 sharpe=1.3811 n_trades=114 freq_y=40.04 freq_ratio=1.000
+  - prefilter: tp1=0.5556 win=0.5556 sum_pnl=670.96 profit_y=235.64 max_dd=-0.0320 sharpe_simple=0.4143 sharpe=1.6459 n_trades=81 freq_y=28.45 freq_ratio=0.711
+
+6) 如何一键调用（最重要）
+6.1 只评估（推荐验收）
+- 命令：
+  python /Users/junnanma/trend_project/src/m30h4_prefilter_only_eval_v1.py
+- 输出目录：
+  /Users/junnanma/reports/m30_h4_mode1_with_gate_explainer_v1/prefilter_only_eval/
+- 产物说明：
+  - <segment>/trades.csv（prefilter 后交易，segment=train/test/verify/lockbox）
+  - metrics_summary.csv（baseline/prefilter 汇总指标）
+
+6.2 重新生成规则（仅研究用，非上线）
+- 命令：
+  python /Users/junnanma/trend_project/src/m30h4_explainer_prefilter_ml_v1.py --ml 0
+- 强调：上线不跑此步骤，避免过拟合
+
+7) 上线注意事项与风控建议
+- 频率下降预期：test 0.641 / verify 0.730 / lockbox 0.711
+- 异常排查顺序：
+  1) trades 输入是否变更（baseline trades 路径/内容）
+  2) 规则字段是否缺失（*_int 计算是否失败）
+  3) 规则 JSON 是否被改动（best_rules_long.json / best_rules_short.json）
+- 禁止事项：
+  - 禁止改规则阈值
+  - 禁止混用其他周期特征（仅 m30_/h4_/gate_）
+  - 禁止启用 ML 排序

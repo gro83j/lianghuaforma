@@ -1,0 +1,124 @@
+M15H1模型一评分过滤器回测模型（M15H1 Mode1 ScoreFilter）
+
+1. 策略概述
+本模型在 M15_H1_Mode1_with_Gate 基础策略之上，引入评分过滤器（ScoreFilter）作为入场门控。
+核心逻辑：只有通过评分过滤器阈值的信号，且满足 Mode1 原始入场逻辑（Gate/Trigger/Anchor + Fib 结构 + 分批止盈）时，才允许开仓。
+目标：在保持频率约束下提升成功率与夏普比率。
+
+2. 数据与循环
+2.1 输入数据
+- M15 与 H1 的 OHLC 数据（含 datetime）
+- 时间戳必须对齐/可映射（datetime 必须一致到分钟）
+
+2.2 主循环
+- 以 M15 已收盘 K 线迭代（i15 为索引）
+- 对当前 M15 时间 t15，取最近一根已收盘 H1
+- ref = floor(t15, 60min) - 60min
+- i60 = h1_index[ref]（若无则跳过）
+- 禁止未来数据：H1 判断仅使用已收盘数据
+
+3. 三套 MACD 的分工
+3.1 Gate：H1 MACD(5,13,5)
+- 周期：H1
+- 价格源：HL2
+- 作用：仅决定做多/做空阶段，不负责具体入场时机
+
+3.2 Trigger：M15 MACD(12,26,9)
+- 周期：M15
+- 价格源：Close
+- 触发定义：
+  金叉：macd_prev < sig_prev && macd_now > sig_now
+  死叉：macd_prev > sig_prev && macd_now < sig_now
+- 成交口径：
+  触发发生在 i15 收盘
+  成交发生在 i15+1 开盘
+
+3.3 Anchor：H1 MACD(12,26,9)
+- 周期：H1
+- 价格源：Close
+- 作用：结构锚点（零上死叉确定 Fib100）
+
+4. Phase（阶段）定义
+4.1 做多阶段 phase_long_active
+- 前置条件：H1 12-26-9 双线均 <= 0
+- 进入条件：已出现零上死叉（5-13-5），当前处于零下且 5-13-5 < 0，尚未首次金叉
+- 退出条件：出现首次金叉
+
+4.2 做空阶段 phase_short_active（镜像）
+- 前置条件：H1 12-26-9 双线均 >= 0
+- 进入条件：出现零下金叉（5-13-5）进入零上，零上期间未首次死叉
+- 退出条件：出现首次死叉
+
+5. 评分过滤器（ScoreFilter）
+- 评分模型：RandomForestClassifier（训练于 M15 入场前 1–5 根聚合特征）
+- 阈值：0.30
+- 门控规则：评分 >= 阈值 才允许进入候选开仓
+- ExplainFilter v2：关闭
+- ExplainFilter M15H1：关闭
+- 模型文件：/Users/junnanma/reports/m15_h1_mode1_with_gate/scorefilter_m15h1.joblib
+
+6. 入场触发与成交口径
+当且仅当：
+- long：phase_long_active=True 且 trig_long=True 且 score>=阈值 且当前无 long 持仓
+- short：phase_short_active=True 且 trig_short=True 且 score>=阈值 且当前无 short 持仓
+成交口径：
+- 触发发生在 i15 收盘
+- 成交发生在 i15+1 开盘
+
+7. 斐波那契结构（Fib100 / Fib0）
+7.1 做多 LONG
+- Fib100：来自 H1 12-26-9 零上死叉锚点
+  fib100 = max(high60[dead_i-5 : dead_i+6])
+- Fib0：来自 M15 触发附近
+  fib0 = min(low15[i15-4 : i15+1])
+
+7.2 做空 SHORT
+- Fib100：来自 H1 12-26-9 零上金叉锚点
+  fib100 = min(low60[gold_i-5 : gold_i+6])
+- Fib0：来自 M15 触发附近
+  fib0 = max(high15[i15-4 : i15+1])
+
+8. 风控与止盈（分批止盈 + BE）
+8.1 价格层级
+LONG：
+- rng = fib100 - fib0
+- sl_init = fib0 - 0.10 * rng
+- tp1 = fib0 + 0.30 * rng
+- tp2 = fib0 + 0.40 * rng
+SHORT：
+- rng = fib0 - fib100
+- sl_init = fib0 + 0.10 * rng
+- tp1 = fib0 - 0.30 * rng
+- tp2 = fib0 - 0.40 * rng
+
+8.2 执行规则
+- 触及 tp1：平一半仓位，剩余移动止损到 BE，runner 目标为 tp2
+- 触及 sl_init：失败平仓（FAIL_SL）
+
+9. 回测设置
+- 数据路径：/Users/junnanma/Desktop/42swam/data_xauusd
+- 回测区间：2015-01-01, 2023-12-31
+- 手数：0.01
+- 定价口径：0.01手价格每+10单位利润+10
+
+10. 回测表现（2015-2023）
+- 成功率：0.8723
+- 平均开单频率：5.48 天/单
+- 夏普比率：3.5766
+- 最大回撤：-0.80%
+
+11. 回测命令
+python /Users/junnanma/trend_project/src/backtest_strategy.py \
+  --data_path "/Users/junnanma/Desktop/42swam/data_xauusd" \
+  --train_data_range "2010-01-01, 2015-12-31" \
+  --test_data_range "2015-01-01, 2020-12-31" \
+  --verify_data_range "2020-01-01, 2023-12-31" \
+  --strategy "M15_H1_Mode1_with_Gate" \
+  --disable_explain_filter \
+  --scorefilter_model_path "/Users/junnanma/reports/m15_h1_mode1_with_gate/scorefilter_m15h1.joblib" \
+  --scorefilter_threshold 0.30 \
+  --backtest_range "2015-01-01, 2023-12-31" \
+  --lots 0.01
+
+12. 调用口令（后续直接对我说这句话即可）
+请读取 /Users/junnanma/Desktop/42swam/M15H1_Mode1_ScoreFilter.txt 并按其中配置启动策略回测。
